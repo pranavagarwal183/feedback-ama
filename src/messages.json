@@ -1,17 +1,17 @@
 [
-    {
-      "title": "Message from User123",
-      "content": "Hey, how are you doing today?",
-      "received": "10 minutes ago"
-    },
-    {
-      "title": "Message from SecretAdmirer",
-      "content": "I really liked your recent post!",
-      "received": "2 hours ago"
-    },
-    {
-      "title": "Message from MysteryGuest",
-      "content": "Do you have any book recommendations?",
-      "received": "1 day ago"
-    }
-  ]
+  {
+    "title": "Feedback from Customer123",
+    "content": "The recent update improved the user experience, but the app still crashes sometimes. Please fix this.",
+    "received": "10 minutes ago"
+  },
+  {
+    "title": "Feedback from AnonymousUser",
+    "content": "I really like the new feature! It makes navigating the app much easier.",
+    "received": "2 hours ago"
+  },
+  {
+    "title": "Feedback from ConcernedCustomer",
+    "content": "The checkout process is too slow. It takes too long to load the payment page.",
+    "received": "1 day ago"
+  }
+]
