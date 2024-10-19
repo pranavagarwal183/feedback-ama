@@ -14,9 +14,10 @@ import { Loader2, RefreshCcw } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
 
-const page = () => {
-  const [messages,setMessages] = useState<Message>([])
+const Page = () => {
+  const [messages,setMessages] = useState<Message[]>([])
   const[isLoading,setIsLoading] = useState(false)
   const [isSwitchLoading, setIsSwitchLoading] = useState(false)
   const {toast} = useToast()
@@ -35,7 +36,7 @@ const page = () => {
     setIsSwitchLoading(true)
     try {
       const response  = await axios.get<ApiResponse>('/api/accept-messages')
-      setValue('acceptMessages',response.data.isAcceptingMessage)
+      setValue('acceptMessages',response.data.isAcceptingMessages)
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>;
       toast({
@@ -46,7 +47,7 @@ const page = () => {
     }finally{
       setIsSwitchLoading(false)
     }
-  },[setValue])
+  },[setValue,toast])
 
   const fetchMessages = useCallback(async (refresh: boolean =false) =>{
     setIsLoading(true)
@@ -71,7 +72,7 @@ const page = () => {
       setIsLoading(false)
       setIsSwitchLoading(false)
     }
-  },[setIsLoading,setMessages])
+  },[setIsLoading,setMessages,toast])
 
     useEffect(()=>{
       if(!session || !session.user){
@@ -163,7 +164,7 @@ const page = () => {
         </Button>
         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
           {messages.length > 0 ? (
-            messages.map((message, index) => (
+            messages.map((message) => (
               <MessageCard
                 key={message._id}
                 message={message}
@@ -178,4 +179,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

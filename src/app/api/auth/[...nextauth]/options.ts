@@ -36,6 +36,7 @@ export const authOptions: NextAuthOptions = {
                     else {
                         throw new Error("Incorrect password")
                     }
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (err: any) {
                     throw new Error(err)
                 }
