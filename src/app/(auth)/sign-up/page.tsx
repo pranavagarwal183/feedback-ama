@@ -44,7 +44,7 @@ export default function SignUpForm() {
 
   useEffect(() => {
     const checkUsernameUnique = async () => {
-    if (username) {
+      if (username) {
         setIsCheckingUsername(true);
         setUsernameMessage(''); // Reset message
         try {
@@ -70,14 +70,25 @@ export default function SignUpForm() {
     try {
       const response = await axios.post<ApiResponse>('/api/sign-up', data);
 
-      toast({
-        title: 'Success',
-        description: response.data.message,
-      });
+      // Check if the user is not verified
+      if (!response.data.isVerified) {
+        toast({
+          title: 'Success',
+          description: 'Sign-up successful! Please verify your account. A verification code has been sent to your email.',
+        });
 
-      router.replace(`/verify/${username}`);
+        // Redirect to the verification page
+        router.replace(`/verify/${data.username}`);
+      } else {
+        toast({
+          title: 'Success',
+          description: 'Sign-up successful! You are now logged in.',
+        });
 
-      setIsSubmitting(false);
+        // Handle successful login or redirection
+        // For example, you might want to redirect to the dashboard
+        router.replace('/dashboard'); // Update this to your desired route
+      }
     } catch (error) {
       console.error('Error during sign-up:', error);
 
@@ -91,7 +102,7 @@ export default function SignUpForm() {
         description: errorMessage,
         variant: 'destructive',
       });
-
+    } finally {
       setIsSubmitting(false);
     }
   };

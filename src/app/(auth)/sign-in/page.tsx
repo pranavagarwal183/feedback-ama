@@ -50,11 +50,22 @@ export default function SignInForm() {
           variant: 'destructive',
         });
       } else {
-        toast({
-          title: 'Error',
-          description: result.error,
-          variant: 'destructive',
-        });
+        // Check if the error message matches the verification required message
+        if (result.error.includes('Please verify your account')) {
+          toast({
+            title: 'Verification Required',
+            description: 'Please verify your account. A verification code has been sent to your email.',
+            variant: 'destructive',
+          });
+          // Redirect to the verification page
+          router.replace(`/verify/${data.identifier}`);
+        } else {
+          toast({
+            title: 'Error',
+            description: result.error,
+            variant: 'destructive',
+          });
+        }
       }
     } else {
       toast({
@@ -62,10 +73,7 @@ export default function SignInForm() {
         description: 'Signed in successfully!',
         variant: 'default',
       });
-      
-      if (result?.url) {
-        router.push('/dashboard'); // Redirect to dashboard
-      }
+      router.push('/dashboard'); // Redirect to the dashboard
     }
 
     setIsSubmitting(false); // Enable button after submission
@@ -87,7 +95,7 @@ export default function SignInForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email/Username</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <Input {...field} />
                   <FormMessage>{form.formState.errors.identifier?.message}</FormMessage>
                 </FormItem>
