@@ -85,9 +85,7 @@ export default function SignUpForm() {
           description: 'Sign-up successful! You are now logged in.',
         });
 
-        // Handle successful login or redirection
-        // For example, you might want to redirect to the dashboard
-        router.replace('/dashboard'); // Update this to your desired route
+        router.replace('/dashboard');
       }
     } catch (error) {
       console.error('Error during sign-up:', error);
